@@ -20903,3 +20903,7 @@ input[type=range].slider.is-danger .has-output-tooltip + output {
   }
 }
 
+.approve-registration .table {
+  width: 100%;
+}
+

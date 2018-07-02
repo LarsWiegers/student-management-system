@@ -31,6 +31,9 @@ class DevelopmentUsersSeeder extends Seeder
             'email' => 'student@student.com',
             'password' => bcrypt('student123'),
             'user_type_id' => $studentId,
+            'registration_complete' => false,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('users')->insert([
@@ -38,6 +41,9 @@ class DevelopmentUsersSeeder extends Seeder
             'email' => 'tutor@tutor.com',
             'password' => bcrypt('tutor123'),
             'user_type_id' => $tutorId,
+            'registration_complete' => true,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('users')->insert([
@@ -45,6 +51,9 @@ class DevelopmentUsersSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin123'),
             'user_type_id' => $adminId,
+            'registration_complete' => true,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
     }

@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -23,6 +17,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $actionNeededUsers = User::where('registration_complete','=',0)->get();
+
+        $needRegistrationApprovalUsers = new Collection();
+
+        foreach($actionNeededUsers as $user) {
+            $exist = DB::table('registrations_denied')
+                ->where('user_id','=', $user->id)
+                ->get()->count();
+            if($exist < 0) {
+                $needRegistrationApprovalUsers->push($user);
+            }
+        }
+
+        return view('home',[
+            'registrationUsers' => $needRegistrationApprovalUsers
+        ]);
     }
 }
